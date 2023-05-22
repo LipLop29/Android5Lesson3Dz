@@ -23,15 +23,15 @@ class AuthUserFragment : Fragment(R.layout.fragment_auth_user) {
 
     private fun setupRequest() = with(binding) {
 
-
-        binding.btnSignUp.setOnClickListener {
+        btnSignUp.setOnClickListener {
             val name = etName.text.toString().trim()
             val surname = etSurname.text.toString().trim()
             val age = etAge.text.toString().trim()
-            viewModel.authUser(name,surname,age.toInt())
 
             when {
                 name.isNotEmpty() && surname.isNotEmpty() && age.isNotEmpty() -> {
+                    viewModel.authUser(name,surname,age.toInt())
+
                     findNavController().navigate(
                         AuthUserFragmentDirections.actionAuthUserFragmentToUserInformationFragment(
                             name,

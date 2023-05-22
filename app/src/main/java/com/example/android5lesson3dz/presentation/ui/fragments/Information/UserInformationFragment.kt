@@ -4,20 +4,24 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.android5lesson3dz.R
 import com.example.android5lesson3dz.databinding.FragmentUserInformationBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UserInformationFragment : Fragment(R.layout.fragment_user_information) {
     private val binding by viewBinding(FragmentUserInformationBinding::bind)
+    private val viewModel by viewModels<UserInformationViewModel>()
     private val args by navArgs<UserInformationFragmentArgs>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        getData()
-        setupListener()
         initialize()
+        setupListener()
+        getData()
     }
 
     private fun initialize() = with(binding){
@@ -55,8 +59,14 @@ class UserInformationFragment : Fragment(R.layout.fragment_user_information) {
     }
 
     private fun getData() {
-        binding.tvName.text = args.name
-        binding.tvSurname.text = args.surname
-        binding.tvAge.text = args.age
+        viewModel.getUser().apply {
+            val name = args.name
+            val surname = args.surname
+            val age = args.age
+
+            binding.tvName.text = name
+            binding.tvSurname.text = surname
+            binding.tvAge.text = age
+        }
     }
 }
