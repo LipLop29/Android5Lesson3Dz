@@ -1,7 +1,8 @@
 package com.example.data.repositories
 
+import com.example.data.local.Dtos.UserDto
+import com.example.data.local.Dtos.toDomain
 import com.example.data.local.preferences.UserDataPreferencesHelper
-import com.example.domain.models.User
 import com.example.domain.repositories.UserDataRepository
 import javax.inject.Inject
 
@@ -15,9 +16,9 @@ class UserDataRepositoryImpl @Inject constructor(
         userDataPreferencesHelper.age = age
     }
 
-    override fun getUser() = User(
+    override fun getUser() = UserDto(
         userDataPreferencesHelper.name.toString(),
         userDataPreferencesHelper.surname.toString(),
         userDataPreferencesHelper.age
-    )
+    ).toDomain()
 }
