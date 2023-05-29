@@ -1,7 +1,7 @@
 package com.example.android5lesson3dz.di
 
-import com.example.android5lesson3dz.data.repositories.UserDataRepositoryImpl
-import com.example.android5lesson3dz.domain.repositories.UserDataRepository
+import com.example.data.repositories.UserDataRepositoryImpl
+import com.example.domain.repositories.UserDataRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
