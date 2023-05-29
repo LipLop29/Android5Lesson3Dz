@@ -1,4 +1,4 @@
-package com.example.data.local.Dtos
+package com.example.data.local.dtos
 
 import com.example.domain.models.User
 

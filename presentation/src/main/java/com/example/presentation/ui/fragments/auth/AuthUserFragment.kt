@@ -5,11 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.presentation.R
 import com.example.presentation.databinding.FragmentAuthUserBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class AuthUserFragment : Fragment(R.layout.fragment_auth_user) {
@@ -30,8 +33,16 @@ class AuthUserFragment : Fragment(R.layout.fragment_auth_user) {
 
             when {
                 name.isNotEmpty() && surname.isNotEmpty() && age.isNotEmpty() -> {
-                    viewModel.authUser(name,surname,age.toInt())
+                    viewModel.authUser(name, surname, age.toInt())
 
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        delay(2000)
+                        viewModel.getUser().apply {
+                            binding.etName.setText(this.name)
+                            binding.etAge.setText(this.age)
+                            binding.etAge.setText(this.age)
+                        }
+                    }
                     findNavController().navigate(
                         AuthUserFragmentDirections.actionAuthUserFragmentToUserInformationFragment(
                             name,
@@ -40,6 +51,7 @@ class AuthUserFragment : Fragment(R.layout.fragment_auth_user) {
                         )
                     )
                 }
+
                 else -> {
                     Toast.makeText(requireContext(), "Заполните все поля", Toast.LENGTH_SHORT)
                         .show()
